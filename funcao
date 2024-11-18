@@ -1,0 +1,328 @@
+const taskForm = document.getElementById('taskForm');
+const taskList = document.getElementById('taskList');
+
+taskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const taskName = document.getElementById('taskName').value;
+    const taskDescription = document.getElementById('taskDescription').value;
+    const taskTime = document.getElementById('taskTime').value;
+
+    addTask(taskName, taskDescription, taskTime);
+
+    taskForm.reset();
+});
+
+function addTask(name, description, time) {
+    const taskItem = document.createElement('li');
+    taskItem.className = 'task-item';
+
+    taskItem.innerHTML = `
+        <span>
+            <strong>${name}</strong><br>
+            ${description}<br>
+            <em>${new Date(time).toLocaleString()}</em>
+        </span>
+        <button onclick="editTask(this)">Editar</button>
+        <button onclick="deleteTask(this)">Excluir</button>
+    `;
+
+    taskList.appendChild(taskItem);
+}
+
+function deleteTask(button) {
+    const taskItem = button.parentElement;
+    taskList.removeChild(taskItem);
+}
+
+function editTask(button) {
+    const taskItem = button.parentElement;
+    const details = taskItem.querySelector('span');
+    const [name, description, time] = details.innerHTML.match(/<strong>(.*?)<\/strong>|<em>(.*?)<\/em>|<br>(.*?)<br>/g).map(item => item.replace(/<\/?[^>]+(>|$)/g, '').trim());
+
+    document.getElementById('taskName').value = name;
+    document.getElementById('taskDescription').value = description;
+    document.getElementById('taskTime').value = new Date(time).toISOString().slice(0, 16);
+
+    taskList.removeChild(taskItem);
+}
+  ##############
+  <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas</title>
+    <!-- <link rel="stylesheet" href="estilos/tarefa.css"> Vinculando ao CSS externo -->
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Gerenciador de Tarefas</h1>
+        </div>
+        <!-- <nav>
+            
+        </nav> -->
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section id="home" class="intro">
+            <h2>Bem-vindo ao Gerenciador de Tarefas</h2>
+            <p>Organize suas tarefas de forma simples e eficiente. Nunca mais perca prazos importantes!</p>
+        </section>
+
+        <section id="tasks">
+            <h2>Adicione uma nova tarefa</h2>
+            <form id="taskForm">
+                <input type="text" id="taskName" placeholder="Título da Tarefa" required>
+                <input type="text" id="taskDescription" placeholder="Descrição da Tarefa" required>
+                <input type="datetime-local" id="taskTime" required>
+                <button type="submit">Adicionar Tarefa</button>
+            </form>
+
+            <h2>Lista de Tarefas</h2>
+            <ul id="taskList"></ul>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Gerenciador de Tarefas.</p>
+            <div class="footer-links">
+            
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script> <!-- Vinculando o JavaScript -->
+</body>
+</html>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%]
+const taskForm = document.getElementById('taskForm');
+const taskList = document.getElementById('taskList');
+
+taskForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const taskName = document.getElementById('taskName').value;
+    const taskDescription = document.getElementById('taskDescription').value;
+    const taskTime = document.getElementById('taskTime').value;
+
+    addTask(taskName, taskDescription, taskTime);
+
+    taskForm.reset();
+});
+
+function addTask(name, description, time) {
+    const taskItem = document.createElement('li');
+    taskItem.className = 'task-item';
+
+    taskItem.innerHTML = `
+        <span>
+            <strong>${name}</strong><br>
+            ${description}<br>
+            <em>${new Date(time).toLocaleString()}</em>
+        </span>
+        <button onclick="deleteTask(this)">Excluir</button>
+    `;
+
+    taskList.appendChild(taskItem);
+}
+
+function deleteTask(button) {
+    const taskItem = button.parentElement;
+    taskList.removeChild(taskItem);
+}
+
+function editTask(button) {
+    const taskItem = button.parentElement;
+    const details = taskItem.querySelector('span');
+    const [name, description, time] = details.innerHTML.match(/<strong>(.*?)<\/strong>|<em>(.*?)<\/em>|<br>(.*?)<br>/g).map(item => item.replace(/<\/?[^>]+(>|$)/g, '').trim());
+
+    document.getElementById('taskName').value = name;
+    document.getElementById('taskDescription').value = description;
+    document.getElementById('taskTime').value = new Date(time).toISOString().slice(0, 16);
+
+    taskList.removeChild(taskItem);
+}
+@@@@@@@@@@@@@@@@@@@@
+/* Estilo global */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: Arial, sans-serif;
+}
+
+body {
+background-color: #ffefeb;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-between;
+min-height: 100vh;
+padding: 20px 0;
+}
+
+/* Header */
+header {
+width: 100%;
+padding: 15px 0;
+background-color: #ff5722; /* Laranja vibrante */
+color: white;
+text-align: center;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+margin: 0;
+font-size: 28px;
+font-weight: bold;
+}
+
+header nav ul {
+list-style-type: none;
+padding: 0;
+display: flex;
+justify-content: center;
+gap: 20px;
+}
+
+header nav a {
+color: white;
+text-decoration: none;
+font-size: 16px;
+padding: 8px 16px;
+border-radius: 5px;
+transition: background-color 0.3s;
+}
+
+header nav a:hover {
+background-color: #ff3d00; /* Efeito hover */
+}
+
+/* Container geral */
+.container {
+width: 100%;
+max-width: 600px;
+margin: 40px auto;
+background-color: white;
+border-radius: 10px;
+box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+padding: 30px;
+text-align: center;
+}
+
+/* Seção Introdução */
+.intro {
+text-align: center;
+margin-bottom: 40px;
+}
+
+.intro h2 {
+font-size: 36px;
+color: #ff5722; /* Cor laranja */
+}
+
+.intro p {
+font-size: 18px;
+color: #555;
+}
+
+/* Formulário de Adicionar Tarefa */
+form h2 {
+color: #e91e63; /* Rosa vivo */
+margin-bottom: 20px;
+font-size: 24px;
+text-align: center;
+}
+
+form input {
+width: 90%;
+padding: 12px;
+margin: 10px 0;
+border: 2px solid #ddd;
+border-radius: 8px;
+font-size: 16px;
+transition: border-color 0.3s ease;
+}
+
+form input:focus {
+border-color: #ff5722;
+outline: none;
+}
+
+form button {
+width: 90%;
+padding: 12px;
+background-color: #e91e63;
+color: white;
+border: none;
+border-radius: 8px;
+font-size: 18px;
+cursor: pointer;
+margin-top: 15px;
+transition: background-color 0.3s ease;
+}
+
+form button:hover {
+background-color: #ad1457;
+}
+
+/* Lista de Tarefas */
+#taskList {
+list-style-type: none;
+margin-top: 20px;
+}
+
+#taskList li {
+background-color: white;
+padding: 15px;
+margin-bottom: 10px;
+border-radius: 8px;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#taskList li span {
+font-weight: bold;
+display: block;
+margin-bottom: 5px;
+}
+
+#taskList li p {
+font-size: 16px;
+color: #555;
+}
+
+/* Footer */
+footer {
+margin-top: 40px;
+width: 100%;
+background-color: #ff5722;
+padding: 15px 0;
+text-align: center;
+color: white;
+font-size: 14px;
+box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer a {
+color: #ffe082; /* Amarelo claro */
+text-decoration: none;
+}
+
+footer a:hover {
+text-decoration: underline;
+}
+
+/* Espaçamento entre header e footer */
+body > header + .container {
+margin-top: 30px;
+}
+
+.container + footer {
+margin-top: 50px;
+}
